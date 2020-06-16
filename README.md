@@ -1,4 +1,5 @@
 # git-checkout-task
+[![Latest release](https://img.shields.io/github/release/int02h/git-checkout-task.svg)](https://github.com/int02h/git-checkout-task/releases/latest)
 
 Git custom command to checkout branch for a specific task
 
