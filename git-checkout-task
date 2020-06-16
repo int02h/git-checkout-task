@@ -1,0 +1,46 @@
+#!/bin/sh
+
+set -e
+
+readonly task_id=$1
+
+readonly currentBranch=$(git rev-parse --abbrev-ref HEAD)
+if [[ $currentBranch == *$task_id* ]]
+then
+	echo "Already on $currentBranch"
+	exit 0
+fi
+
+readonly branches=( $(git branch -a | grep "$task_id") )
+
+if [ ${#branches[@]} -eq 0 ]
+then
+	echo "No branches found for $task_id"
+	exit 1
+fi
+
+readonly target=${branches[0]##*/}
+clashingBranches=()
+
+for br in "${branches[@]}"
+do
+	otherTarget="${br##*/}"
+	if [ $otherTarget != $target ]
+	then
+		clashingBranches+=($otherTarget)
+	fi
+done
+
+if [ ${#clashingBranches[@]} -eq 0 ]
+then
+	echo "Checking out $target"
+	git checkout $target
+else
+	echo "There are clashing branches for $task_id:"
+	echo "- $target"
+	for CLASH in "${clashingBranches[@]}"
+	do
+		echo "- $CLASH"
+	done
+	exit 1
+fi
