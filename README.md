@@ -11,6 +11,18 @@ This custom git command is intended to simplify checkout of feature-branch for a
 - Feature-branch must have prefix with task ID.
   For example, for task `ABC-1234` you'd create branch `ABC-1234-awesome-bugfix`.
 
+## How to use
+
+```bash
+git checkout-task ABS-1234
+```
+
+If the command name looks long for you just add an alias for it:
+
+```bash
+git config --global alias.cot checkout-task
+```
+
 ## How it works
 
 1. Grep all branches including remote ones with the task ID
@@ -37,10 +49,10 @@ Put the file `git-checkout-task` to any folder that is in the PATH and make it e
 For example:
 
 ```bash
-cd ~
-mkdir .gitbin
-cd .gitbin
-wget https://raw.githubusercontent.com/int02h/git-checkout-task/master/git-checkout-task
+cd ~ && \
+mkdir .gitbin && \
+cd .gitbin && \
+curl -o git-checkout-task https://raw.githubusercontent.com/int02h/git-checkout-task/master/git-checkout-task && \
 chmod +x git-checkout-task
 ```
 
