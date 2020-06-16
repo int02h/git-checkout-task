@@ -49,3 +49,9 @@ Then add `~/.gitbin` to the PATH. Put the following line in the `~/.bashrc`, or 
 ```bash
 export PATH=$PATH:~/.gitbin
 ```
+
+## License
+
+Copyright (c) 2020 Daniil Popov
+
+Licensed under the [MIT](LICENSE) License.
