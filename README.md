@@ -9,7 +9,7 @@ This custom git command is intended to simplify checkout of feature-branch for a
 
 ## Requirements
 
-- Feature-branch must have a prefix with the task ID.
+- Feature-branch must have a prefix with the task ID.  
   For example, for task `ABC-1234` you'd create branch `ABC-1234-awesome-bugfix`.
 
 ## How to use
