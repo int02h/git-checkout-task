@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# version 1.0.1
+
 set -e
 
 readonly task_id=$1
@@ -19,12 +21,12 @@ then
 	exit 1
 fi
 
-readonly target=${branches[0]##*/}
+readonly target="$task_id${branches[0]#*$task_id}"
 clashingBranches=()
 
 for br in "${branches[@]}"
 do
-	otherTarget="${br##*/}"
+	otherTarget="$task_id${br#*$task_id}"
 	if [ $otherTarget != $target ]
 	then
 		clashingBranches+=($otherTarget)

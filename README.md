@@ -10,7 +10,7 @@ This custom git command is intended to simplify checkout of feature-branch for a
 ## Requirements
 
 - Feature-branch must have a prefix with the task ID.  
-  For example, for task `ABC-1234` you'd create branch `ABC-1234-awesome-bugfix`.
+  For example, for task `ABC-1234` you'd create branch `ABC-1234-awesome-bugfix` or `ABC-1234/awesome-bugfix`.
 
 ## How to use
 
@@ -27,7 +27,7 @@ git config --global alias.cot checkout-task
 ## How it works
 
 1. Grep all branches including remote ones with the task ID
-1. Removes everything before the last slash inclusive from the branch name thus `remotes/origin/ABC-1234-awesome-bugfix` becomes just `ABC-1234-awesome-bugfix`
+1. Removes everything before task id thus `remotes/origin/ABC-1234-awesome-bugfix` becomes just `ABC-1234-awesome-bugfix` or `remotes/origin/ABC-1234/awesome-bugfix` becomes `ABC-1234/awesome-bugfix`
 1. Checkout that branch
 
 ## Edge cases
@@ -63,8 +63,14 @@ Then add `~/.gitbin` to the PATH. Put the following line in the `~/.bashrc`, or 
 export PATH=$PATH:~/.gitbin
 ```
 
+## Changelog
+
+### v1.0.1
+
+- Support slash `/` in branch name so both `ABC-1234-awesome-bugfix` and `ABC-1234/awesome-bugfix` are valid
+
 ## License
 
-Copyright (c) 2020 Daniil Popov
+Copyright (c) 2022 Daniil Popov
 
 Licensed under the [MIT](LICENSE) License.
