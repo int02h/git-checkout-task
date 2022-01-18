@@ -1,6 +1,10 @@
 #!/bin/sh
 
-# version 1.0.1
+# Copyright (c) 2022 Daniil Popov
+# Licensed under the MIT License.
+
+# Version 1.0.1
+# https://github.com/int02h/git-checkout-task
 
 set -e
 
