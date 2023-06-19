@@ -9,8 +9,7 @@ This custom git command is intended to simplify checkout of feature-branch for a
 
 ## Requirements
 
-- Feature-branch must have a prefix with the task ID.  
-  For example, for task `ABC-1234` you'd create branch `ABC-1234-awesome-bugfix` or `ABC-1234/awesome-bugfix`.
+- Feature-branch must contain a task ID anywhere within it. The following branchs names are valid for task `ABC-1234`: `ABC-1234-awesome-bugfix`, `ABC-1234/awesome-bugfix`, `feature/ABC-1234-awesome-feature`, and etc.
 
 ## How to use
 
@@ -69,8 +68,12 @@ export PATH=$PATH:~/.gitbin
 
 - Support slash `/` in branch name so both `ABC-1234-awesome-bugfix` and `ABC-1234/awesome-bugfix` are valid
 
+### v1.0.2
+
+- Task ID can be anywhere within a branch name, not only at the beginning.
+
 ## License
 
-Copyright (c) 2022 Daniil Popov
+Copyright (c) 2023 Daniil Popov
 
 Licensed under the [MIT](LICENSE) License.
