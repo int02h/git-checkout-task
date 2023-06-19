@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright (c) 2022 Daniil Popov
+# Copyright (c) 2023 Daniil Popov
 # Licensed under the MIT License.
 
 # Version 1.0.1
@@ -17,7 +17,10 @@ then
 	exit 0
 fi
 
-readonly branches=( $(git branch -a | grep "$task_id") )
+readonly localBranches=( $(git branch --format="%(refname:lstrip=2)" | grep "$task_id") )
+readonly remoteBranches=( $(git branch -r --format="%(refname:lstrip=3)" | grep "$task_id") )
+readonly branches=(`for R in "${localBranches[@]}" "${remoteBranches[@]}" ; do echo "$R" ; done | sort -du`)
+
 
 if [ ${#branches[@]} -eq 0 ]
 then
@@ -25,28 +28,13 @@ then
 	exit 1
 fi
 
-readonly target="$task_id${branches[0]#*$task_id}"
-clashingBranches=()
-
-for br in "${branches[@]}"
-do
-	otherTarget="$task_id${br#*$task_id}"
-	if [ $otherTarget != $target ]
-	then
-		clashingBranches+=($otherTarget)
-	fi
-done
-
-if [ ${#clashingBranches[@]} -eq 0 ]
+if [ ${#branches[@]} -eq 1 ]
 then
-	echo "Checking out $target"
-	git checkout $target
-else
-	echo "There are clashing branches for $task_id:"
-	echo "- $target"
-	for CLASH in "${clashingBranches[@]}"
-	do
-		echo "- $CLASH"
-	done
-	exit 1
+	echo "Checking out ${branches[0]}"
+	git checkout ${branches[0]}
+	exit 0
 fi
+
+echo "There are clashing branches for $task_id:"
+printf -- "- %s\n" "${branches[@]}"
+exit 1

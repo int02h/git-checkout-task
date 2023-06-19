@@ -29,7 +29,9 @@ class Git:
         os.system("git checkout %s" % name)        
 
     def checkoutTask(self, id):
-        return subprocess.getoutput("git checkout-task %s" % id).strip()
+        result = subprocess.getoutput("git checkout-task %s" % id).strip()
+        print("checkoutTask: %s" % result)
+        return result
 
     def setupRemote(self): 
         os.system("git remote add test-origin git@github.com:int02h/git-checkout-task.git")
@@ -48,7 +50,7 @@ class TestGitCommand(unittest.TestCase):
     def test_already_on_branch(self):
         git = Git().init()
         git.createBranch("ABC-123/test-branch")
-        git.checkoutTask("ABC-123/test-branch")
+        git.checkoutBranch("ABC-123/test-branch")
         self.assertEqual(git.checkoutTask("ABC-123"), "Already on ABC-123/test-branch")
 
     def test_more_than_one_branch(self):
@@ -68,9 +70,13 @@ class TestGitCommand(unittest.TestCase):
         git.createBranch("ABC-123-test-branch")
         self.assertTrue(git.checkoutTask("ABC-123").startswith("Checking out ABC-123-test-branch"))
 
-        # git.init()
-        # git.createBranch("feature/ABC-123-test-branch")
-        # self.assertTrue(git.checkoutTask("ABC-123").startswith("Checking out ABC-123-test-branch"))
+        git.init()
+        git.createBranch("feature/ABC-123-test-branch")
+        self.assertTrue(git.checkoutTask("ABC-123").startswith("Checking out feature/ABC-123-test-branch"))
+
+        git.init()
+        git.createBranch("bug-fix/ABC-123-test-branch")
+        self.assertTrue(git.checkoutTask("ABC-123").startswith("Checking out bug-fix/ABC-123-test-branch"))
 
     def test_checkout_success_remote_and_local(self):
         git = Git().init().setupRemote()
